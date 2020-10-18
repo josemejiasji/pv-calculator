@@ -1,14 +1,4 @@
 (function () {
-    // Shortcut to get elements
-    var el = function (element) {
-        if (element.charAt(0) === "#") {
-            // If passed an ID...
-            return document.querySelector(element); // ... returns single element
-        }
-
-        return document.querySelectorAll(element); // Otherwise, returns a nodelist
-    };
-
     // Variables
     var calculatorContainer = el("#calculator"); // Calculator container
     var viewer = el("#viewer"); // Calculator screen where result is displayed
@@ -22,11 +12,21 @@
     var operator = ""; // Selected operator
     var DECIMAL_SEPARATOR = ".";
 
+    // Shortcut to get elements
+    var el = function (element) {
+        if (element.charAt(0) === "#") {
+            // If passed an ID...
+            return document.querySelector(element); // ... returns single element
+        }
+
+        return document.querySelectorAll(element); // Otherwise, returns a nodelist
+    };
+
     // When: Number is clicked. Get the current number selected
     var setNum = function () {
         if (resultNumber) {
             // If a result was displayed, reset number
-            currentNumber = this.getAttribute("data-num");
+            currentNumber = this.dataset.num;
             resultNumber = "";
         } else {
             // Otherwise, add digit to previous number (this is a string!)
@@ -35,7 +35,7 @@
             if (this.dataset.num === DECIMAL_SEPARATOR && currentNumber.includes(DECIMAL_SEPARATOR)) {
                 return;
             }
-            currentNumber += this.getAttribute("data-num");
+            currentNumber += this.dataset.num;
         }
 
         viewer.innerHTML = currentNumber; // Display current number
@@ -48,9 +48,9 @@
             currentNumber = "";
         }
 
-        operator = this.getAttribute("data-ops");
+        operator = this.dataset.ops;
 
-        equalsButton.setAttribute("data-result", ""); // Reset result in attr
+        equalsButton.dataset.result = ""; // Reset result in attr
     };
 
     // When: Equals is clicked. Calculate result
@@ -88,7 +88,7 @@
 
         // Display result, finally!
         viewer.innerHTML = resultNumber;
-        equalsButton.setAttribute("data-result", resultNumber);
+        equalsButton.dataset.result = resultNumber;
 
         // Now reset oldNum & keep result
         previousNumber = 0;
@@ -100,7 +100,7 @@
         previousNumber = "";
         currentNumber = "";
         viewer.innerHTML = "0";
-        equalsButton.setAttribute("data-result", resultNumber);
+        equalsButton.dataset.result = resultNumber;
     };
 
     /* The click events */
