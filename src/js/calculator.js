@@ -75,6 +75,7 @@
     };
 
     // Map operator to logic and return result
+    //TODO: properly handle float numbers, quick solution implement BigNumber.js
     var performOperation = function () {
         var result = 0;
 
@@ -89,6 +90,10 @@
 
             case "divide":
                 result = previousNumber / currentNumber;
+                break;
+
+            case "multiply":
+                result = previousNumber * currentNumber;
                 break;
 
             // If equal is pressed without an operator, keep number and continue
