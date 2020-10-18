@@ -87,6 +87,10 @@
                 result = previousNumber - currentNumber;
                 break;
 
+            case "divide":
+                result = previousNumber / currentNumber;
+                break;
+
             // If equal is pressed without an operator, keep number and continue
             default:
                 result = currentNumber;
