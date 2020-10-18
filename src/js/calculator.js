@@ -10,14 +10,14 @@
     };
 
     // Variables
-    var viewer = el("#viewer"), // Calculator screen where result is displayed
-        equals = el("#equals"), // Equal button
-        nums = el(".num"), // List of numbers
-        ops = el(".ops"), // List of operators
-        theNum = "", // Current number
-        oldNum = "", // First number
-        resultNum = 0, // Result
-        operator = ""; // Batman
+    var viewer = el("#viewer"); // Calculator screen where result is displayed
+    var equals = el("#equals"); // Equal button
+    var nums = el(".num"); // List of numbers
+    var ops = el(".ops"); // List of operators
+    var theNum = ""; // Current number
+    var oldNum = ""; // First number
+    var resultNum = 0; // Result
+    var operator = ""; // Batman
     var DECIMAL_SEPARATOR = ".";
 
     // When: Number is clicked. Get the current number selected
