@@ -60,21 +60,43 @@
         currentNumber = parseFloat(currentNumber);
 
         // Perform operation
+        resultNumber = performOperation();
+
+        // If NaN or Infinity returned
+        validateResultNumber();
+
+        // Display result, finally!
+        viewer.innerHTML = resultNumber;
+        equalsButton.dataset.result = resultNumber;
+
+        // Now reset previousNumber & keep result
+        previousNumber = 0;
+        currentNumber = resultNumber;
+    };
+
+    // Map operator to logic and return result
+    var performOperation = function() {
+        var result = 0;
+
         switch (operator) {
             case "plus":
-                resultNumber = previousNumber + currentNumber;
+                result = previousNumber + currentNumber;
                 break;
 
             case "minus":
-                resultNumber = previousNumber - currentNumber;
+                result = previousNumber - currentNumber;
                 break;
 
             // If equal is pressed without an operator, keep number and continue
             default:
-                resultNumber = currentNumber;
+                result = currentNumber;
         }
 
-        // If NaN or Infinity returned
+        return result;
+    };
+
+    // Validate resultNumber and print error if needed
+    var validateResultNumber = function () {
         if (!isFinite(resultNumber)) {
             if (isNaN(resultNumber)) {
                 // If result is not a number; set off by, eg, double-clicking operators
@@ -85,14 +107,6 @@
                 calculatorContainer.classList.add("broken"); // Break calculator
             }
         }
-
-        // Display result, finally!
-        viewer.innerHTML = resultNumber;
-        equalsButton.dataset.result = resultNumber;
-
-        // Now reset oldNum & keep result
-        previousNumber = 0;
-        currentNumber = resultNumber;
     };
 
     // When: Clear button is pressed. Clear everything
