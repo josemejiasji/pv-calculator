@@ -86,9 +86,9 @@
 </style>
 
 <script>
-  (function() {
+  (function () {
     // Shortcut to get elements
-    var el = function(element) {
+    var el = function (element) {
       if (element.charAt(0) === "#") {
         // If passed an ID...
         return document.querySelector(element); // ... returns single element
@@ -102,14 +102,14 @@
       equals = el("#equals"), // Equal button
       nums = el(".num"), // List of numbers
       ops = el(".ops"), // List of operators
-      theNum = "0", // Current number
-      oldNum = "0", // First number
+      theNum = "", // Current number
+      oldNum = "", // First number
       resultNum = 0, // Result
       operator = ""; // Batman
     var DECIMAL_SEPARATOR = ".";
 
     // When: Number is clicked. Get the current number selected
-    var setNum = function() {
+    var setNum = function () {
       if (resultNum) {
         // If a result was displayed, reset number
         theNum = this.getAttribute("data-num");
@@ -128,16 +128,19 @@
     };
 
     // When: Operator is clicked. Pass number to oldNum and save operator
-    var moveNum = function() {
-      oldNum = theNum;
-      theNum = "";
+    var moveNum = function () {
+      if (theNum) {
+        oldNum = theNum;
+        theNum = "";
+      }
+
       operator = this.getAttribute("data-ops");
 
       equals.setAttribute("data-result", ""); // Reset result in attr
     };
 
     // When: Equals is clicked. Calculate result
-    var displayNum = function() {
+    var displayNum = function () {
       // Convert string input to numbers
       oldNum = parseFloat(oldNum);
       theNum = parseFloat(theNum);
@@ -179,7 +182,7 @@
     };
 
     // When: Clear button is pressed. Clear everything
-    var clearAll = function() {
+    var clearAll = function () {
       oldNum = "";
       theNum = "";
       viewer.innerHTML = "0";
