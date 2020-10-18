@@ -30,6 +30,12 @@ Product quality, testing and finding bugs is really important at Payvision. This
 
 Test it and fix any potential bug you find. Feel free to document your findings in readme file or help yourself with commit messages.
 
+Defects found:
+- You can select multiple decimal separators (.) breaking the calculator
+- Plus operator does a subtracting operation
+- Minus operator does a adding operation
+- Clicking more than once in a operator breaks the calculator
+
 ### 3. New features implementation
 
 Our product owner required us new features for this application. We would like the application new version to support multiplications and divisions.
@@ -37,12 +43,21 @@ Our product owner required us new features for this application. We would like t
 - Could you implement these new features?
 - Bear in mind usage of git-flow to track your changes.
 - Current version is 1.2.2 (see package.json version). Should we increase the version? How? Why?
+To increase the version the of app I would use SemVer convention (X.Y.Z) where:
+
+#### Answer:
+- I would use X (MAYOR) for breaking changes or "radical" changes, like new UI or implementing a framework for the view
+- I would use Y (MINOR) for adding new features, like multiplications and divisions
+- I would use Z (PATCH) for bugfixing or feature tweaks (clean code or performance) 
 
 ### 4. Test automation
 
 We would like to automate testing of this application.
 
 - What kind of tests would you implement? Why?
+
+#### Answer:
+I would implement unit tests to cover all methods of the calculator, following [the testing pyramid](https://martinfowler.com/articles/practical-test-pyramid.html) from more granular to less granular tests.
 
 **Bonus**: Implement the tests.
 
