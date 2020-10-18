@@ -10,112 +10,114 @@
     };
 
     // Variables
+    var calculatorContainer = el("#calculator"); // Calculator container
     var viewer = el("#viewer"); // Calculator screen where result is displayed
-    var equals = el("#equals"); // Equal button
-    var nums = el(".num"); // List of numbers
-    var ops = el(".ops"); // List of operators
-    var theNum = ""; // Current number
-    var oldNum = ""; // First number
-    var resultNum = 0; // Result
-    var operator = ""; // Batman
+    var equalsButton = el("#equals"); // Equals button
+    var clearButton = el("#clear"); // Clear button
+    var numberButtons = el(".num"); // List of numbers
+    var operatorButtons = el(".ops"); // List of operators
+    var currentNumber = ""; // Current number
+    var previousNumber = ""; // First number
+    var resultNumber = 0; // Result
+    var operator = ""; // Selected operator
     var DECIMAL_SEPARATOR = ".";
 
     // When: Number is clicked. Get the current number selected
     var setNum = function () {
-        if (resultNum) {
+        if (resultNumber) {
             // If a result was displayed, reset number
-            theNum = this.getAttribute("data-num");
-            resultNum = "";
+            currentNumber = this.getAttribute("data-num");
+            resultNumber = "";
         } else {
             // Otherwise, add digit to previous number (this is a string!)
 
             // If '.' is clicked and was already set, ignore it.
-            if (this.dataset.num === DECIMAL_SEPARATOR && theNum.includes(DECIMAL_SEPARATOR)) {
+            if (this.dataset.num === DECIMAL_SEPARATOR && currentNumber.includes(DECIMAL_SEPARATOR)) {
                 return;
             }
-            theNum += this.getAttribute("data-num");
+            currentNumber += this.getAttribute("data-num");
         }
 
-        viewer.innerHTML = theNum; // Display current number
+        viewer.innerHTML = currentNumber; // Display current number
     };
 
     // When: Operator is clicked. Pass number to oldNum and save operator
     var moveNum = function () {
-        if (theNum) {
-            oldNum = theNum;
-            theNum = "";
+        if (currentNumber) {
+            previousNumber = currentNumber;
+            currentNumber = "";
         }
 
         operator = this.getAttribute("data-ops");
 
-        equals.setAttribute("data-result", ""); // Reset result in attr
+        equalsButton.setAttribute("data-result", ""); // Reset result in attr
     };
 
     // When: Equals is clicked. Calculate result
     var displayNum = function () {
         // Convert string input to numbers
-        oldNum = parseFloat(oldNum);
-        theNum = parseFloat(theNum);
+        previousNumber = parseFloat(previousNumber);
+        currentNumber = parseFloat(currentNumber);
 
         // Perform operation
         switch (operator) {
             case "plus":
-                resultNum = oldNum + theNum;
+                resultNumber = previousNumber + currentNumber;
                 break;
 
             case "minus":
-                resultNum = oldNum - theNum;
+                resultNumber = previousNumber - currentNumber;
                 break;
 
             // If equal is pressed without an operator, keep number and continue
             default:
-                resultNum = theNum;
+                resultNumber = currentNumber;
         }
 
         // If NaN or Infinity returned
-        if (!isFinite(resultNum)) {
-            if (isNaN(resultNum)) {
+        if (!isFinite(resultNumber)) {
+            if (isNaN(resultNumber)) {
                 // If result is not a number; set off by, eg, double-clicking operators
-                resultNum = "You broke it!";
+                resultNumber = "You broke it!";
             } else {
                 // If result is infinity, set off by dividing by zero
-                resultNum = "Look at what you've done";
-                el("#calculator").classList.add("broken"); // Break calculator
+                resultNumber = "Look at what you've done";
+                calculatorContainer.classList.add("broken"); // Break calculator
             }
         }
 
         // Display result, finally!
-        viewer.innerHTML = resultNum;
-        equals.setAttribute("data-result", resultNum);
+        viewer.innerHTML = resultNumber;
+        equalsButton.setAttribute("data-result", resultNumber);
 
         // Now reset oldNum & keep result
-        oldNum = 0;
-        theNum = resultNum;
+        previousNumber = 0;
+        currentNumber = resultNumber;
     };
 
     // When: Clear button is pressed. Clear everything
     var clearAll = function () {
-        oldNum = "";
-        theNum = "";
+        previousNumber = "";
+        currentNumber = "";
         viewer.innerHTML = "0";
-        equals.setAttribute("data-result", resultNum);
+        equalsButton.setAttribute("data-result", resultNumber);
     };
 
     /* The click events */
 
     // Add click event to numbers
-    for (var i = 0, l = nums.length; i < l; i++) {
-        nums[i].onclick = setNum;
+    for (var i = 0, l = numberButtons.length; i < l; i++) {
+        numberButtons[i].onclick = setNum;
     }
 
     // Add click event to operators
-    for (var i = 0, l = ops.length; i < l; i++) {
-        ops[i].onclick = moveNum;
+    for (var i = 0, l = operatorButtons.length; i < l; i++) {
+        operatorButtons[i].onclick = moveNum;
     }
 
     // Add click event to equal sign
-    equals.onclick = displayNum;
+    equalsButton.onclick = displayNum;
 
     // Add click event to clear button
-    el("#clear").onclick = clearAll;
+    clearButton.onclick = clearAll;
 })();
