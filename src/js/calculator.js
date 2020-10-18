@@ -1,4 +1,14 @@
 (function () {
+    // Shortcut to get elements
+    var el = function (element) {
+        if (element.charAt(0) === "#") {
+            // If passed an ID...
+            return document.querySelector(element); // ... returns single element
+        }
+
+        return document.querySelectorAll(element); // Otherwise, returns a nodelist
+    };
+
     // Variables
     var calculatorContainer = el("#calculator"); // Calculator container
     var viewer = el("#viewer"); // Calculator screen where result is displayed
@@ -11,16 +21,6 @@
     var resultNumber = 0; // Result
     var operator = ""; // Selected operator
     var DECIMAL_SEPARATOR = ".";
-
-    // Shortcut to get elements
-    var el = function (element) {
-        if (element.charAt(0) === "#") {
-            // If passed an ID...
-            return document.querySelector(element); // ... returns single element
-        }
-
-        return document.querySelectorAll(element); // Otherwise, returns a nodelist
-    };
 
     // When: Number is clicked. Get the current number selected
     var setNum = function () {
@@ -75,7 +75,7 @@
     };
 
     // Map operator to logic and return result
-    var performOperation = function() {
+    var performOperation = function () {
         var result = 0;
 
         switch (operator) {
@@ -120,18 +120,18 @@
     /* The click events */
 
     // Add click event to numbers
-    for (var i = 0, l = numberButtons.length; i < l; i++) {
-        numberButtons[i].onclick = setNum;
-    }
+    numberButtons.forEach(function (item) {
+        item.addEventListener('click', setNum);
+    })
 
     // Add click event to operators
-    for (var i = 0, l = operatorButtons.length; i < l; i++) {
-        operatorButtons[i].onclick = moveNum;
-    }
+    operatorButtons.forEach(function (item) {
+        item.addEventListener('click', moveNum);
+    })
 
     // Add click event to equal sign
-    equalsButton.onclick = displayNum;
+    equalsButton.addEventListener('click', displayNum);
 
     // Add click event to clear button
-    clearButton.onclick = clearAll;
+    clearButton.addEventListener('click', clearAll);
 })();
