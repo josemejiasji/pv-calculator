@@ -21,3 +21,8 @@
 - line 187: avoid inline event listener, you can replace it with addEventListener
 - line 191: replace for loop with forEach
 - line 199: why not assigning this selector to a variable? be consistent
+
+
+## Note:
+
+I would also recommend updating the code to use ES6+ features but it would depend on the browser you need to support. I assume you need to support old browsers so you sticked to the most supported syntax and you are not transpiling and optimizing your code.
